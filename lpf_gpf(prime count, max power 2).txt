@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const int N = 1e3 + 10;
+vector<int> lpf(N), gpf(N);
+
+void sieve() {
+  for (int i = 2; i < N; i++) {
+    if (lpf[i] == 0) {
+      lpf[i] = gpf[i] = i;
+      for (int j = 2 * i; j < N; j += i) {
+        if (lpf[j] == 0) lpf[j] = i;
+        gpf[j] = i;
+      }
+    }
+  }
+}
+
+int prime_count(int n) {
+  int ans = 0;
+  while (n > 1) {
+    ans++;
+    n /= lpf[n];
+  }
+  return ans;
+}
+
+ll max_power2(ll k) {
+  ll ans = 1;
+  while (ans * 2 <= k) {
+    ans *= 2;
+  }
+  return ans;
+}
+
+void test() {
+  ll n, k;
+  cin >> n >> k;
+
+  int ans = prime_count(n);
+  ll x = max_power2(k);
+  while (x > 1) {
+    ans++;
+    x /= 2;
+  }
+
+  cout << ans << "\n";
+}
+
+int main() {
+  ios::sync_with_stdio(0), cin.tie(0), sieve();
+  int t = 1;  // cin >> t;
+  while (t--) test();
+  return 0;
+}
