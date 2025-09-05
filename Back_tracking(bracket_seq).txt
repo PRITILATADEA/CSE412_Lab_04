@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+void generate_parenthesis(int open, int close, string &s) {
+  if (open == 0 and close == 0) {
+    cout << s << "\n";
+    return;
+  }
+
+  if (open > 0) {
+    s += '(';
+    open--;
+    generate_parenthesis (open, close, s);
+    s.pop_back();
+    open++;
+  }
+  
+  if (close > 0 and close > open) {
+    s += ')';
+    close--;
+    generate_parenthesis (open, close, s);
+    s.pop_back();
+    close++;
+  }
+
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    int open = n, close = n;
+    string s;
+    generate_parenthesis(open, close, s);
+}
+
+int main() {
+    ios_base::sync_with_stdio(0), cin.tie(0);
+    int t = 1;  //cin >> t;
+    while (t--) solve();
+    return 0;
+}
