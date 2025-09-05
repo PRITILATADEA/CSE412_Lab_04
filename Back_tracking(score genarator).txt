@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+set<array<int, 3>> st;
+
+void generate_score(array<int, 3> &a, vector<array<int, 2>> &lst, int i) {
+  if (i == lst.size()) {
+    st.insert(a);
+    return;
+  }
+  int x = lst[i][0];
+  int y = lst[i][1];
+  // x jitse
+  a[x] += 3;
+  generate_score(a, lst, i + 1);
+  a[x] -= 3;
+  // y jitse
+  a[y] += 3;
+  generate_score(a, lst, i + 1);
+  a[y] -= 3;
+  // match draw
+  a[x]++, a[y]++;
+  generate_score(a, lst, i + 1);
+  a[x]--, a[y]--;
+}
+
+void test() {
+  array<int, 3> sc;
+  for (auto &e : sc) {
+    cin >> e;
+  }
+
+  if (st.count(sc)) {
+    cout << "YES\n";
+  } else cout << "NO\n";
+}
+
+int main() {
+  ios::sync_with_stdio(0), cin.tie(0);
+
+  // genarate 
+  array<int, 3> a = {0, 0, 0};
+  vector<array<int, 2>> lst;
+  for (int i = 0; i < 3; i++) {
+    for (int j = i + 1; j < 3; j++) {
+      lst.push_back({i, j});
+    }
+  }
+  generate_score(a, lst, 0);
+  //
+  
+  int t = 1;  cin >> t;
+  while (t--) test();
+  return 0;
+}
